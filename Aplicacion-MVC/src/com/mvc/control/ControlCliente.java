@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControlCliente implements Controlador, Serializable {
 
-    private List<Cliente> listadoClientes;
+    private static List<Cliente> listadoClientes;
 
     public ControlCliente() {
 
@@ -28,9 +28,9 @@ public class ControlCliente implements Controlador, Serializable {
 
     private void inicializar() {
         try {
-            this.listadoClientes = ControlArchivo.leerArchivo("Clientes");
-            if (this.listadoClientes == null) {
-                this.listadoClientes = new LinkedList<>();
+            listadoClientes = ControlArchivo.leerArchivo("Clientes");
+            if (listadoClientes == null) {
+                listadoClientes = new LinkedList<>();
             }
         } catch (ClassNotFoundException | IOException ex) {
             JOptionPane.showMessageDialog(null, "Error al leer el archivo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -44,8 +44,8 @@ public class ControlCliente implements Controlador, Serializable {
                 this.inicializar();
                 Cliente cliente = (Cliente) objeto;
                 if (!this.existe(cliente.getIdentificacion())) {
-                    this.listadoClientes.add(cliente);
-                    ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
+                    listadoClientes.add(cliente);
+                    ControlArchivo.guardarArchivo(listadoClientes, "Clientes");
                     JOptionPane.showMessageDialog(null, "Cliente registrado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Este cliente ya existe", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -60,7 +60,7 @@ public class ControlCliente implements Controlador, Serializable {
         this.inicializar();
         String id = (String) identificacion;
         Cliente cliente = null;
-        for (Cliente c : this.listadoClientes) {
+        for (Cliente c : listadoClientes) {
             if (c.getIdentificacion().equals(id)) {
                 cliente = c;
             }
@@ -86,9 +86,9 @@ public class ControlCliente implements Controlador, Serializable {
         try {
             this.inicializar();
             cliente = this.buscar(identificacion);
-            for (int i = 0; i < this.listadoClientes.size(); i++) {
-                if (this.listadoClientes.get(i).getIdentificacion().equals(identificacion) && cliente != null) {
-                    cliente = this.listadoClientes.get(i);
+            for (int i = 0; i < listadoClientes.size(); i++) {
+                if (listadoClientes.get(i).getIdentificacion().equals(identificacion) && cliente != null) {
+                    cliente = listadoClientes.get(i);
                 } else {
                     JOptionPane.showMessageDialog(null, "Este cliente no existe", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
@@ -104,7 +104,7 @@ public class ControlCliente implements Controlador, Serializable {
         try {
             this.inicializar();
             ((DefaultTableModel) tabla.getModel()).setNumRows(0);
-            for (Cliente cliente : this.listadoClientes) {
+            for (Cliente cliente : listadoClientes) {
                 ((DefaultTableModel) tabla.getModel()).addRow(new Object[]{cliente.getIdentificacion(), cliente.getNombre(), cliente.getApellido()});
             }
         } catch (NullPointerException ex) {
@@ -118,11 +118,11 @@ public class ControlCliente implements Controlador, Serializable {
             if (objeto instanceof Cliente) {
                 this.inicializar();
                 Cliente cliente = (Cliente) objeto;
-                for (int i = 0; i < this.listadoClientes.size(); i++) {
-                    if (this.listadoClientes.get(i).getIdentificacion().equals(cliente.getIdentificacion())) {
-                        this.listadoClientes.remove(i);
-                        this.listadoClientes.add(cliente);
-                        ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
+                for (int i = 0; i < listadoClientes.size(); i++) {
+                    if (listadoClientes.get(i).getIdentificacion().equals(cliente.getIdentificacion())) {
+                        listadoClientes.remove(i);
+                        listadoClientes.add(cliente);
+                        ControlArchivo.guardarArchivo(listadoClientes, "Clientes");
                         JOptionPane.showMessageDialog(null, "Cliente modificado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Este cliente no existe", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -139,13 +139,13 @@ public class ControlCliente implements Controlador, Serializable {
         try {
             this.inicializar();
             Cliente cliente = this.buscar(identificacion);
-            for (int i = 0; i < this.listadoClientes.size(); i++) {
+            for (int i = 0; i < listadoClientes.size(); i++) {
                 if (this.listadoClientes.get(i).getIdentificacion().equals(identificacion) && cliente != null) {
                     int opcion = JOptionPane.showOptionDialog(null, "¿Esta¡ seguro que desea eliminar este cliente llamado " + cliente.getNombre() + " " + cliente.getApellido() + " ? ", "Confirmar EliminaciÃ³n", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"SI", "NO"}, "SI");
                     if (opcion != -1) {
                         if ((opcion + 1) == 1) {
-                            this.listadoClientes.remove(cliente);
-                            ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
+                            listadoClientes.remove(cliente);
+                            ControlArchivo.guardarArchivo(listadoClientes, "Clientes");
                             JOptionPane.showMessageDialog(null, "Cliente eliminado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
@@ -157,4 +157,13 @@ public class ControlCliente implements Controlador, Serializable {
             JOptionPane.showMessageDialog(null, "Error al eliminar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private static List<Cliente> getListadoClientes() {
+        return listadoClientes;
+    }
+
+    private static void setListadoClientes(List<Cliente> listado) {
+        listadoClientes = listado;
+    }
+
 }
