@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class ControlArchivo implements Serializable {
 
-    private static final String ruta = "../ProyectoDeAulaRestaurante/src/com/mvc/archivos/";
+    private static final String ruta = "../Aplicacion-MVC/src/com/mvc/archivos/";
 
     public ControlArchivo() {
 
