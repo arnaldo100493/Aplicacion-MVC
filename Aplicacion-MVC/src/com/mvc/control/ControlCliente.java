@@ -27,7 +27,7 @@ public class ControlCliente implements Controlador {
 
     private void inicializar() {
         try {
-            this.listadoClientes = ControlArchivo.leerArchivo("Cliente");
+            this.listadoClientes = ControlArchivo.leerArchivo("Clientes");
             if (this.listadoClientes == null) {
                 this.listadoClientes = new LinkedList<>();
             }
@@ -44,7 +44,7 @@ public class ControlCliente implements Controlador {
                 Cliente cliente = (Cliente) objeto;
                 if (!this.existe(cliente.getIdentificacion())) {
                     this.listadoClientes.add(cliente);
-                    ControlArchivo.guardarArchivo(this.listadoClientes, "Cliente");
+                    ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
                     JOptionPane.showMessageDialog(null, "Cliente registrado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Este cliente ya existe", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -121,7 +121,7 @@ public class ControlCliente implements Controlador {
                     if (this.listadoClientes.get(i).getIdentificacion().equals(cliente.getIdentificacion())) {
                         this.listadoClientes.remove(i);
                         this.listadoClientes.add(cliente);
-                        ControlArchivo.guardarArchivo(this.listadoClientes, "Cliente");
+                        ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
                         JOptionPane.showMessageDialog(null, "Cliente modificado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Este cliente no existe", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -144,7 +144,7 @@ public class ControlCliente implements Controlador {
                     if (opcion != -1) {
                         if ((opcion + 1) == 1) {
                             this.listadoClientes.remove(cliente);
-                            ControlArchivo.guardarArchivo(this.listadoClientes, "Cliente");
+                            ControlArchivo.guardarArchivo(this.listadoClientes, "Clientes");
                             JOptionPane.showMessageDialog(null, "Cliente eliminado con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
