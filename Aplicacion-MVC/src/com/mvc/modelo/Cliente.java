@@ -5,11 +5,13 @@
  */
 package com.mvc.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author FABAME
  */
-public class Cliente {
+public class Cliente implements Serializable {
 
     private String identificacion;
     private String nombre;

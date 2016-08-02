@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author FABAME
  */
-public class ControlArchivo {
+public class ControlArchivo implements Serializable {
 
     private static final String ruta = "../ProyectoDeAulaRestaurante/src/com/mvc/archivos/";
 

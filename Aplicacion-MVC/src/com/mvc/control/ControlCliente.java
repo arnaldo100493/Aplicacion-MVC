@@ -7,6 +7,7 @@ package com.mvc.control;
 
 import com.mvc.modelo.Cliente;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author FABAME
  */
-public class ControlCliente implements Controlador {
+public class ControlCliente implements Controlador, Serializable {
 
     private List<Cliente> listadoClientes;
 
